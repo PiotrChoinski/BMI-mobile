@@ -56,7 +56,7 @@ class _UsersListPageState extends State<UsersListPage> {
                   },
                   leading: const Icon(CupertinoIcons.person),
                   title: Text(items[index].prefix),
-                  trailing: const Icon(CupertinoIcons.forward),
+                  trailing: const CupertinoListTileChevron(),
                 ))));
   }
 }
