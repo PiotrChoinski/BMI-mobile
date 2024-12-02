@@ -37,33 +37,48 @@ class _UsersListPageState extends State<UsersListPage> {
                   MaterialPageRoute(
                       builder: (context) => const AddUserPage()))),
         ),
-        child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) => Dismissible(
-                key: Key(index.toString()),
-                onDismissed: (direction) {
-                  print('Dismissed');
-                },
-                background: Container(color: Colors.red),
-                child: CupertinoListTile(
-                  onTap: () {
-                    showCupertinoDialog(
-                        context: context,
-                        builder: (context) => CupertinoAlertDialog(
-                              title: Text(items[index].prefix),
-                              content: Text(items[index].helper),
-                              actions: [
-                                CupertinoDialogAction(
-                                    child: const Text('OK'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    }),
-                              ],
-                            ));
-                  },
-                  leading: const Icon(CupertinoIcons.person),
-                  title: Text(items[index].prefix),
-                  trailing: const CupertinoListTileChevron(),
-                ))));
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: CupertinoListSection.insetGrouped(
+              children: [
+                for (var item in items)
+                  Dismissible(
+                      key: Key(item.prefix),
+                      onDismissed: (direction) => print(item.prefix),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        color: CupertinoColors.systemRed,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: const Icon(CupertinoIcons.delete,
+                            color: Colors.white),
+                      ),
+                      child: CupertinoListTile(
+                        title: Text(item.prefix),
+                        leading: const Icon(CupertinoIcons.person),
+                        trailing: const Icon(
+                          CupertinoIcons.forward,
+                          color: CupertinoColors.lightBackgroundGray,
+                        ),
+                        onTap: () {
+                          showCupertinoDialog(
+                              context: context,
+                              builder: (context) => CupertinoAlertDialog(
+                                    title: const Text('Language'),
+                                    content:
+                                        Text('You selected ${item.prefix}'),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                          child: const Text('OK'),
+                                          onPressed: () =>
+                                              Navigator.pop(context))
+                                    ],
+                                  ));
+                        },
+                      ))
+              ],
+            ),
+          ),
+        ));
   }
 }
