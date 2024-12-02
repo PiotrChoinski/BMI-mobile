@@ -1,3 +1,4 @@
+import 'package:bmi_mobile/pages/add_user_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,9 +27,15 @@ class _UsersListPageState extends State<UsersListPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
-          middle: Text('Users List'),
+        navigationBar: CupertinoNavigationBar(
+          middle: const Text('Users List'),
           backgroundColor: Colors.transparent,
+          trailing: CupertinoButton(
+              child: const Icon(CupertinoIcons.add),
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddUserPage()))),
         ),
         child: ListView.builder(
             itemCount: items.length,
