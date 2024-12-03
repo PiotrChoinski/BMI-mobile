@@ -2,7 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({super.key});
+  final String placeholder;
+  final void Function(DateTime) selectOption;
+
+  const DatePicker({
+    super.key,
+    required this.placeholder,
+    required this.selectOption,
   });
 
   @override
