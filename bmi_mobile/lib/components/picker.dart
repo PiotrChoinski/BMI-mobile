@@ -17,7 +17,15 @@ class Picker extends StatefulWidget {
 }
 
 class _PickerState extends State<Picker> {
-  int selectedWidget = 0;
+  int? selectedWidget;
+
+  void handleOpenPicker() {
+    if (selectedWidget == null) {
+      setState(() => selectedWidget = 0);
+      widget.selectOption(0);
+    }
+    _showPicker();
+  }
 
   void _showPicker() {
     showCupertinoModalPopup(
@@ -36,8 +44,9 @@ class _PickerState extends State<Picker> {
               Expanded(
                 child: CupertinoPicker(
                   itemExtent: 50,
-                  scrollController:
-                      FixedExtentScrollController(initialItem: selectedWidget),
+                  scrollController: FixedExtentScrollController(
+                      initialItem:
+                          selectedWidget != null ? selectedWidget! : 0),
                   onSelectedItemChanged: (value) => {
                     widget.selectOption(value),
                     setState(() => selectedWidget = value)
@@ -61,13 +70,12 @@ class _PickerState extends State<Picker> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextFormFieldRow(
-      placeholder: widget.placeholder,
-      readOnly: true,
-      onTap: _showPicker,
-      controller: TextEditingController(
-          text: selectedWidget == 0
-              ? ''
-              : widget.data[selectedWidget]['value'].toString()),
-    );
+        placeholder: widget.placeholder,
+        readOnly: true,
+        onTap: handleOpenPicker,
+        controller: TextEditingController(
+            text: selectedWidget != null
+                ? widget.data[selectedWidget!]['value'].toString()
+                : ''));
   }
 }

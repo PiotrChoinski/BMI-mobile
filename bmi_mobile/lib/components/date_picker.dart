@@ -32,6 +32,14 @@ class _DatePickerState extends State<DatePicker> {
     return '$day/$month/${selectedDate!.year} ($howOld y.o.)';
   }
 
+  void handleOpenDatePicker() {
+    if (selectedDate == null) {
+      setState(() => selectedDate = DateTime(DateTime.now().year - 1));
+      widget.selectOption(DateTime(DateTime.now().year - 1));
+    }
+    _showDatePicker();
+  }
+
   void _showDatePicker() {
     showCupertinoModalPopup(
       context: context,
@@ -68,7 +76,7 @@ class _DatePickerState extends State<DatePicker> {
   Widget build(BuildContext context) {
     return CupertinoTextFormFieldRow(
         placeholder: widget.placeholder,
-        onTap: _showDatePicker,
+        onTap: handleOpenDatePicker,
         readOnly: true,
         controller: TextEditingController(
             text: selectedDate != null ? handleDate() : ''));
