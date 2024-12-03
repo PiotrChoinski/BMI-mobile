@@ -2,14 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Picker extends StatefulWidget {
-  const Picker({super.key});
+  final String placeholder;
+  final List data;
+  final void Function(int) selectOption;
+
+  const Picker(
+      {super.key,
+      required this.placeholder,
+      required this.data,
+      required this.selectOption});
 
   @override
   State<Picker> createState() => _PickerState();
 }
 
 class _PickerState extends State<Picker> {
-  String selectedFruit = 'Apple';
+  int selectedWidget = 0;
 
   void _showPicker() {
     showCupertinoModalPopup(
@@ -27,20 +35,20 @@ class _PickerState extends State<Picker> {
               ),
               Expanded(
                 child: CupertinoPicker(
-                  itemExtent: 50, // Wysokość pojedynczego elementu
-                  onSelectedItemChanged: (value) => print(value),
-                  children: List.generate(100, (index) {
+                  itemExtent: 50,
+                  onSelectedItemChanged: (value) => {
+                    widget.selectOption(value),
+                    setState(() {
+                      selectedWidget = value + 135;
+                    })
+                  },
+                  children: widget.data.map<Widget>((item) {
                     return Center(
-                      child: Text('${index + 135}'),
+                      child: Text(
+                        item['value'].toString(),
+                      ),
                     );
-                  }),
-                  // children: _fruitNames.map((fruit) {
-                  //   return Center(
-                  //     child: Text(
-                  //       fruit,
-                  //     ),
-                  //   );
-                  // }).toList(),
+                  }).toList(),
                 ),
               ),
             ],
@@ -53,10 +61,11 @@ class _PickerState extends State<Picker> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextFormFieldRow(
-      placeholder: 'Select Fruit',
+      placeholder: widget.placeholder,
       readOnly: true,
-      onTap: _showPicker, // Wywołanie metody pokazującej picker
-      controller: TextEditingController(text: selectedFruit),
+      onTap: _showPicker,
+      controller: TextEditingController(
+          text: selectedWidget == 0 ? '' : selectedWidget.toString()),
     );
   }
 }

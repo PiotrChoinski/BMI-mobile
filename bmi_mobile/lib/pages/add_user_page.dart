@@ -11,6 +11,9 @@ class AddUserPage extends StatefulWidget {
 }
 
 class _AddUserPageState extends State<AddUserPage> {
+  final _formKey = GlobalKey<FormState>();
+  final Map<String, dynamic> _newUser = {};
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -21,19 +24,31 @@ class _AddUserPageState extends State<AddUserPage> {
         ),
         child: SafeArea(
             child: Form(
-          autovalidateMode: AutovalidateMode.always,
-          child: CupertinoFormSection.insetGrouped(
-              header: const Text('Add new user'),
-              children: [
-                CupertinoTextFormFieldRow(
-                  placeholder: 'Name',
-                ),
-                CupertinoTextFormFieldRow(
-                  placeholder: 'Surname',
-                ),
-                const DatePicker(),
-                const Picker()
-              ]),
-        )));
+                key: _formKey,
+                autovalidateMode: AutovalidateMode.always,
+                child: Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: CupertinoFormSection.insetGrouped(children: [
+                    CupertinoTextFormFieldRow(
+                        placeholder: 'Name',
+                        onChanged: (value) => _newUser['name'] = value),
+                    CupertinoTextFormFieldRow(
+                      placeholder: 'Surname',
+                      onChanged: (value) => _newUser['surname'] = value,
+                    ),
+                    const DatePicker(),
+                    Picker(
+                        placeholder: "Height",
+                        data: List.generate(
+                          100,
+                          (index) => {'id': index + 135, 'value': index + 135},
+                        ),
+                        selectOption: (value) =>
+                            _newUser['height'] = value + 135),
+                    CupertinoButton(
+                        child: Text('Click'),
+                        onPressed: () => print(_newUser.toString()))
+                  ]),
+                ))));
   }
 }
