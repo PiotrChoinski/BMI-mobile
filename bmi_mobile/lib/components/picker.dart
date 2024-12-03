@@ -36,11 +36,11 @@ class _PickerState extends State<Picker> {
               Expanded(
                 child: CupertinoPicker(
                   itemExtent: 50,
+                  scrollController:
+                      FixedExtentScrollController(initialItem: selectedWidget),
                   onSelectedItemChanged: (value) => {
                     widget.selectOption(value),
-                    setState(() {
-                      selectedWidget = widget.data[value]['value'];
-                    })
+                    setState(() => selectedWidget = value)
                   },
                   children: widget.data.map<Widget>((item) {
                     return Center(
@@ -65,7 +65,9 @@ class _PickerState extends State<Picker> {
       readOnly: true,
       onTap: _showPicker,
       controller: TextEditingController(
-          text: selectedWidget == 0 ? '' : selectedWidget.toString()),
+          text: selectedWidget == 0
+              ? ''
+              : widget.data[selectedWidget]['value'].toString()),
     );
   }
 }

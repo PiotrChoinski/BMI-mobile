@@ -14,6 +14,11 @@ class _AddUserPageState extends State<AddUserPage> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _newUser = {};
 
+  final List heightList =
+      List.generate(100, (index) => {'id': index + 135, 'value': index + 135});
+  final List weightList =
+      List.generate(150, (index) => {'id': index, 'value': index});
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -39,18 +44,12 @@ class _AddUserPageState extends State<AddUserPage> {
                     const DatePicker(),
                     Picker(
                         placeholder: "Height",
-                        data: List.generate(
-                          100,
-                          (index) => {'id': index + 135, 'value': index + 135},
-                        ),
+                        data: heightList,
                         selectOption: (value) =>
                             _newUser['height'] = value + 135),
                     Picker(
                         placeholder: "Weight",
-                        data: List.generate(
-                          150,
-                          (index) => {'id': index, 'value': index},
-                        ),
+                        data: weightList,
                         selectOption: (value) => _newUser['weight'] = value),
                     CupertinoButton(
                         child: Text('Click'),
