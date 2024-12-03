@@ -10,17 +10,16 @@ class UsersListPage extends StatefulWidget {
 }
 
 class Item {
-  final String prefix;
-  final String helper;
-  const Item({required this.prefix, required this.helper});
+  final String name;
+  final String surname;
+  const Item({required this.name, required this.surname});
 }
 
 List<Item> items = [
-  const Item(prefix: "Italiano", helper: 'Italiano'),
-  const Item(prefix: "English", helper: 'English'),
-  const Item(prefix: "Español", helper: 'Español'),
-  const Item(prefix: "Français", helper: 'Français'),
-  const Item(prefix: "Polish", helper: 'Polish'),
+  const Item(name: 'Tomasz', surname: 'Ogrodnik'),
+  const Item(name: 'Adam', surname: 'Czyz'),
+  const Item(name: 'Bartosz', surname: 'Prejs'),
+  const Item(name: 'Witold', surname: 'Blady')
 ];
 
 class _UsersListPageState extends State<UsersListPage> {
@@ -43,8 +42,9 @@ class _UsersListPageState extends State<UsersListPage> {
               children: [
                 for (var item in items)
                   Dismissible(
-                      key: Key(item.prefix),
-                      onDismissed: (direction) => print(item.prefix),
+                      key: Key('${item.name}_${item.surname}'),
+                      onDismissed: (direction) =>
+                          print('${item.name} ${item.surname}'),
                       direction: DismissDirection.endToStart,
                       background: Container(
                         color: CupertinoColors.systemRed,
@@ -54,7 +54,7 @@ class _UsersListPageState extends State<UsersListPage> {
                             color: Colors.white),
                       ),
                       child: CupertinoListTile(
-                        title: Text(item.prefix),
+                        title: Text('${item.name} ${item.surname}'),
                         leading: const Icon(CupertinoIcons.person),
                         trailing: const Icon(
                           CupertinoIcons.forward,
@@ -65,8 +65,8 @@ class _UsersListPageState extends State<UsersListPage> {
                               context: context,
                               builder: (context) => CupertinoAlertDialog(
                                     title: const Text('Language'),
-                                    content:
-                                        Text('You selected ${item.prefix}'),
+                                    content: Text(
+                                        'You selected ${item.name} ${item.surname}'),
                                     actions: [
                                       CupertinoDialogAction(
                                           child: const Text('OK'),

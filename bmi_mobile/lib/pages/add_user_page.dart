@@ -1,4 +1,5 @@
 import 'package:bmi_mobile/components/date_picker.dart';
+import 'package:bmi_mobile/components/picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,7 @@ class _AddUserPageState extends State<AddUserPage> {
                   placeholder: 'Surname',
                 ),
                 const DatePicker(),
+                const Picker()
               ]),
         )));
   }

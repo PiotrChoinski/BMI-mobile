@@ -56,7 +56,7 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextFormFieldRow(
-      placeholder: 'Date',
+      placeholder: 'Birth date',
       onTap: _showDatePicker,
       readOnly: true,
       controller: _controller,
