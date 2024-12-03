@@ -15,7 +15,7 @@ class _AddUserPageState extends State<AddUserPage> {
   final Map<String, dynamic> _newUser = {};
 
   final List heightList =
-      List.generate(100, (index) => {'id': index + 135, 'value': index + 135});
+      List.generate(100, (index) => {'id': index, 'value': index + 135});
   final List weightList =
       List.generate(150, (index) => {'id': index, 'value': index});
 
@@ -57,11 +57,11 @@ class _AddUserPageState extends State<AddUserPage> {
                         placeholder: "Gender",
                         data: const [
                           {'id': 1, 'value': 'Man'},
-                          {'id': 1, 'value': 'Woman'}
+                          {'id': 2, 'value': 'Woman'}
                         ],
                         selectOption: (value) => _newUser['Gender'] = value),
                     CupertinoButton(
-                        child: Text('Click'),
+                        child: const Text('Add user'),
                         onPressed: () => print(_newUser.toString()))
                   ]),
                 ))));
