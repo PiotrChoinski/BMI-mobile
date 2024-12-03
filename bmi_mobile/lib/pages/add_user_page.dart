@@ -41,7 +41,9 @@ class _AddUserPageState extends State<AddUserPage> {
                       placeholder: 'Surname',
                       onChanged: (value) => _newUser['surname'] = value,
                     ),
-                    const DatePicker(),
+                    DatePicker(
+                        placeholder: 'Birthday',
+                        selectOption: (value) => _newUser['birthday'] = value),
                     Picker(
                         placeholder: "Height",
                         data: heightList,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({super.key});
+  });
 
   @override
   State<DatePicker> createState() => _DatePickerState();
@@ -10,12 +11,19 @@ class DatePicker extends StatefulWidget {
 
 class _DatePickerState extends State<DatePicker> {
   DateTime? selectedDate;
-  late TextEditingController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
+  String handleDate() {
+    final String day = '${selectedDate!.day}'.length > 1
+        ? selectedDate!.day.toString()
+        : '0${selectedDate!.day}';
+
+    final String month = '${selectedDate!.month}'.length > 1
+        ? selectedDate!.month.toString()
+        : '0${selectedDate!.month}';
+
+    final int howOld = DateTime.now().difference(selectedDate!).inDays ~/ 365;
+
+    return '$day/$month/${selectedDate!.year} ($howOld y.o.)';
   }
 
   void _showDatePicker() {
@@ -38,11 +46,8 @@ class _DatePickerState extends State<DatePicker> {
                   initialDateTime: selectedDate ?? DateTime.now(),
                   maximumDate: DateTime.now(),
                   onDateTimeChanged: (DateTime newDateTime) {
-                    setState(() {
-                      selectedDate = newDateTime;
-                      _controller.text =
-                          '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}';
-                    });
+                    widget.selectOption(newDateTime);
+                    setState(() => selectedDate = newDateTime);
                   },
                 ),
               ),
@@ -56,16 +61,10 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextFormFieldRow(
-      placeholder: 'Birth date',
-      onTap: _showDatePicker,
-      readOnly: true,
-      controller: _controller,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+        placeholder: widget.placeholder,
+        onTap: _showDatePicker,
+        readOnly: true,
+        controller: TextEditingController(
+            text: selectedDate != null ? handleDate() : ''));
   }
 }
