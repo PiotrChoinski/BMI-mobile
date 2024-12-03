@@ -1,6 +1,6 @@
+import 'package:bmi_mobile/components/date_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({super.key});
@@ -14,7 +14,7 @@ class _AddUserPageState extends State<AddUserPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: Text('Add User'),
+          middle: Text('New user'),
           backgroundColor: Colors.transparent,
           previousPageTitle: 'Users List',
         ),
@@ -30,6 +30,7 @@ class _AddUserPageState extends State<AddUserPage> {
                 CupertinoTextFormFieldRow(
                   placeholder: 'Surname',
                 ),
+                const DatePicker(),
               ]),
         )));
   }
