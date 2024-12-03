@@ -45,6 +45,13 @@ class _AddUserPageState extends State<AddUserPage> {
                         ),
                         selectOption: (value) =>
                             _newUser['height'] = value + 135),
+                    Picker(
+                        placeholder: "Weight",
+                        data: List.generate(
+                          150,
+                          (index) => {'id': index, 'value': index},
+                        ),
+                        selectOption: (value) => _newUser['weight'] = value),
                     CupertinoButton(
                         child: Text('Click'),
                         onPressed: () => print(_newUser.toString()))

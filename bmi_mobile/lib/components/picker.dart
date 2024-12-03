@@ -39,7 +39,7 @@ class _PickerState extends State<Picker> {
                   onSelectedItemChanged: (value) => {
                     widget.selectOption(value),
                     setState(() {
-                      selectedWidget = value + 135;
+                      selectedWidget = widget.data[value]['value'];
                     })
                   },
                   children: widget.data.map<Widget>((item) {
