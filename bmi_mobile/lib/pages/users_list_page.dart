@@ -1,5 +1,5 @@
 import 'package:bmi_mobile/database/database_helper.dart';
-import 'package:bmi_mobile/model/User.dart';
+import 'package:bmi_mobile/model/user.dart';
 import 'package:bmi_mobile/pages/add_user_page.dart';
 import 'package:bmi_mobile/pages/user_details_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -92,7 +92,8 @@ class _UsersListPageState extends State<UsersListPage> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const UserDetailsPage(),
+                                builder: (context) =>
+                                    UserDetailsPage(user: user),
                               ),
                             );
                             _fetchUsers();
