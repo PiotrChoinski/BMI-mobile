@@ -1,5 +1,7 @@
 import 'package:bmi_mobile/components/date_picker.dart';
 import 'package:bmi_mobile/components/picker.dart';
+import 'package:bmi_mobile/database/database_helper.dart';
+import 'package:bmi_mobile/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,23 @@ class _AddUserPageState extends State<AddUserPage> {
       List.generate(100, (index) => {'id': index, 'value': index + 135});
   final List weightList =
       List.generate(150, (index) => {'id': index, 'value': index});
+  final List genderList = [
+    {'id': 1, 'value': 'Man'},
+    {'id': 2, 'value': 'Woman'}
+  ];
+
+  void _addUser() async {
+    final newUserClass = User(
+        name: _newUser['name'],
+        surname: _newUser['surname'],
+        birthday: _newUser['birthday'],
+        height: _newUser['height'],
+        weight: _newUser['weight'],
+        gender: _newUser['gender']);
+
+    await DatabaseHelper.instance.addUser(newUserClass);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +67,20 @@ class _AddUserPageState extends State<AddUserPage> {
                         placeholder: "Height",
                         data: heightList,
                         selectOption: (value) =>
-                            _newUser['height'] = value + 135),
+                            _newUser['height'] = heightList[value]['value']),
                     Picker(
                         placeholder: "Weight",
                         data: weightList,
-                        selectOption: (value) => _newUser['weight'] = value),
+                        selectOption: (value) =>
+                            _newUser['weight'] = weightList[value]['value']),
                     Picker(
                         placeholder: "Gender",
-                        data: const [
-                          {'id': 1, 'value': 'Man'},
-                          {'id': 2, 'value': 'Woman'}
-                        ],
-                        selectOption: (value) => _newUser['Gender'] = value),
+                        data: genderList,
+                        selectOption: (value) =>
+                            _newUser['gender'] = genderList[value]['value']),
                     CupertinoButton(
                         child: const Text('Add user'),
-                        onPressed: () => print(_newUser.toString()))
+                        onPressed: () => _addUser())
                   ]),
                 ))));
   }
