@@ -54,20 +54,4 @@ class DatabaseHelper {
     Database db = await instance.db;
     return await db.delete('users', where: 'id = ?', whereArgs: [id]);
   }
-
-  // Future<void> initializeUsers() async {
-  //   List<User> usersToAdd = [
-  //     User(
-  //         name: 'Tomasz',
-  //         surname: 'Ogrodnik',
-  //         birthday: DateTime(1995, 1, 1),
-  //         height: 180.0,
-  //         weight: 80.0,
-  //         gender: 'man')
-  //   ];
-
-  //   for (User user in usersToAdd) {
-  //     await insertUser(user);
-  //   }
-  // }
 }
