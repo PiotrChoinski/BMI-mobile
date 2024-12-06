@@ -1,3 +1,4 @@
+import 'package:bmi_mobile/components/alert.dart';
 import 'package:bmi_mobile/components/bmi_chart.dart';
 import 'package:bmi_mobile/database/database_helper.dart';
 import 'package:bmi_mobile/model/user.dart';
@@ -44,23 +45,11 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
           trailing: GestureDetector(
               onTap: () => showCupertinoDialog(
                   context: context,
-                  builder: (context) => CupertinoAlertDialog(
-                        title: const Text('Delete user'),
-                        content: const Text(
-                            'Are you sure you want to delete this user?'),
-                        actions: [
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: const Text('Cancel'),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                          CupertinoDialogAction(
-                            isDestructiveAction: true,
-                            child: const Text('Delete'),
-                            onPressed: () => _deleteUser(),
-                          ),
-                        ],
-                      )),
+                  builder: (context) => Alert(
+                      title: 'Delete user',
+                      message: 'Are you sure you want to delete this user?',
+                      acceptAction: () => _deleteUser(),
+                      cancelAction: () => Navigator.pop(context))),
               child: const Icon(
                 CupertinoIcons.delete,
                 size: 25,

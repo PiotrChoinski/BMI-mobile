@@ -1,9 +1,11 @@
+import 'package:bmi_mobile/components/alert.dart';
 import 'package:bmi_mobile/components/date_picker.dart';
 import 'package:bmi_mobile/components/picker.dart';
 import 'package:bmi_mobile/database/database_helper.dart';
 import 'package:bmi_mobile/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({super.key});
@@ -21,11 +23,27 @@ class _AddUserPageState extends State<AddUserPage> {
   final List weightList =
       List.generate(150, (index) => {'id': index, 'value': index});
   final List genderList = [
-    {'id': 1, 'value': 'Man'},
-    {'id': 2, 'value': 'Woman'}
+    {'id': 1, 'value': 'Male'},
+    {'id': 2, 'value': 'Female'}
   ];
 
   void _addUser() async {
+    if (_newUser['name'] == null ||
+        _newUser['name'].isEmpty ||
+        _newUser['surname'] == null ||
+        _newUser['surname'].isEmpty ||
+        _newUser['birthday'] == null ||
+        _newUser['height'] == null ||
+        _newUser['weight'] == null ||
+        _newUser['gender'] == null) {
+      return showCupertinoDialog(
+          context: context,
+          builder: (context) => Alert(
+              title: 'Error',
+              message: 'Please fill all fields',
+              acceptAction: () => Navigator.pop(context)));
+    }
+
     final newUserClass = User(
         name: _newUser['name'],
         surname: _newUser['surname'],
@@ -54,11 +72,22 @@ class _AddUserPageState extends State<AddUserPage> {
                   padding: const EdgeInsets.only(top: 20),
                   child: CupertinoFormSection.insetGrouped(children: [
                     CupertinoTextFormFieldRow(
-                        placeholder: 'Name',
-                        onChanged: (value) => _newUser['name'] = value),
+                      placeholder: 'Name',
+                      onChanged: (value) => _newUser['name'] = value,
+                      enableSuggestions: true,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
+                      ],
+                    ),
                     CupertinoTextFormFieldRow(
                       placeholder: 'Surname',
                       onChanged: (value) => _newUser['surname'] = value,
+                      enableSuggestions: true,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
+                      ],
                     ),
                     DatePicker(
                         placeholder: 'Birthday',
