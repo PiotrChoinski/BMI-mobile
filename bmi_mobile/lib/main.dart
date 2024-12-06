@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.initDb();
-  // await DatabaseHelper.instance.initializeUsers();
 
   runApp(const MyApp());
 }
